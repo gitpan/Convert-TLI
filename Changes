@@ -1,0 +1,6 @@
+Revision history for Perl extension Convert::TLI.
+
+0.01  Tue Oct 28 11:02:15 2014
+	- original version; created by NEONOX with options
+		-b 5.8.8 -XAn Convert::TLI
+
