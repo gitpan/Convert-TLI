@@ -19,7 +19,7 @@ our @EXPORT = qw(
 	encode_tli decode_tli detect_tli	
 );
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub new {
     my $class = shift;
@@ -54,8 +54,6 @@ sub encode_tli {
     my $hexport = sprintf("%4.4x", $port_to_encode);
     
     return  $self->{prefix}."$hexport$ip".$self->{nulls};
-	
-	
 } 
 
 sub decode_tli {
@@ -115,19 +113,20 @@ TLI is Transport Layer Interface
 
 subase/interfaces file:
 
-my_server
-master tli tcp /dev/tcp 0x0002333337f00001
-query tli tcp /dev/tcp 0x0002333337f00001
+    my_server
+    master tli tcp /dev/tcp 0x0002333337f00001
+    query tli tcp /dev/tcp 0x0002333337f00001
+
+
 
 =head1 SYNOPSIS
 
 	use Convert::TLI;
-	my $tli_decoded = Convert::TLI->new();
-	my ($ip, $port) = $tli_decoded->decode_tli('0x0002333337f00001');
-	print "Server $ip @ $port\n";
-	print "String: 0x0002333337f00001\n";
-	my $decoded =  $tli_decoded->encode_tli($ip,$port);
-	print "Got encoded: $decoded\n";
+	my $tli = Convert::TLI->new();
+	my ($ip, $port) = $tli->decode_tli('0x0002333337f00001');
+	print "Server $ip @ $port";
+	my $decoded =  $tli->encode_tli($ip,$port);
+	print "Got encoded: $decoded";
   
 =head1 DESCRIPTION
 
@@ -154,6 +153,7 @@ C<new>
      my $decoded =  $tli_decoded->encode_tli($ip,$port);
      print "Got encoded: $decoded";
      XXXX....000
+
 =item *
 
 C<encode_tli>
@@ -174,7 +174,9 @@ Decode a TLI string into a string of bytes.
 
 C<detect_tli>
 
-    my $decoded = ( detect_tli("0x0002333337f00001") ) ? 'You have TLI style' : 'Regular IP style';
+    my $decoded = ( detect_tli("0x0002333337f00001") ) 
+                    ? 'You have TLI style' 
+                    : 'Regular IP style';
 
 Detect is string TLI styled
 
@@ -183,7 +185,7 @@ Detect is string TLI styled
 
 =head1 AUTHOR
 
-root, Alex Mazur (aka NEONOX) E<lt>alex@emuwebmail.comE<gt>
+Alex Mazur (aka NEONOX) E<lt>alex@emuwebmail.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
